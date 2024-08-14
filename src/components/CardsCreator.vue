@@ -1,12 +1,12 @@
 <template>
     <div class="container">
+        <div class="title">
+            <h1>Creador de cartas Pokemon</h1>
+        </div>
         <div class="image-container">
-            <ul class="pokemon-list">
-                <li name="pikachu" class="pokemon-item"><img src="../assets/pikachu.jpeg" alt="pikachu"></li>
-                <li name="bulbasaur" class="pokemon-item"><img src="../assets/bulbasaur.jpeg" alt="bulbasaur"></li>
-                <li name="squirtle" class="pokemon-item"><img src="../assets/squirtle.jpeg" alt="squirtle"></li>
-                <li name="charmander" class="pokemon-item"><img src="../assets/charmander.jpeg" alt="charmander"></li>
-            </ul>
+            <img class="image-item" src="../assets/pikachu.jpeg" alt="pikachu">
+            <img class="image-item" src="../assets/bulbasaur.jpeg" alt="bulbasaur">
+            <img class="image-item" src="../assets/squirtle.jpeg" alt="squirtle">
         </div>
         <div class="data-container">
             <div class="data-item name">
@@ -35,3 +35,27 @@
         </div>
     </div>
 </template>
+
+<style scoped>
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 30%;
+}
+
+.title {
+    margin: 10%;
+}
+
+.image-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.image-item {
+    max-width: 62px;
+    max-height: 62px;
+}
+
+</style>

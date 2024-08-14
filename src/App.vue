@@ -1,5 +1,4 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
   <CardsCreator/>
 </template>
 
@@ -13,3 +12,14 @@ export default {
   }
 }
 </script>
+
+<style>
+
+body {
+  margin: auto;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  /* margin: 20%; */
+}
+</style>
