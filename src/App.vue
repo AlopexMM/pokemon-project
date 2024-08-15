@@ -18,8 +18,9 @@ export default {
 body {
   margin: auto;
   width: 90%;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
-  /* margin: 20%; */
+  align-items: center;
 }
 </style>
