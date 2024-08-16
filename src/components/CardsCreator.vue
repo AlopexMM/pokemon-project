@@ -33,13 +33,11 @@
         <div class="button-container">
             <PrimaryButtonComponent text="Crear Pokemon" @click="createCard"/>
         </div>
-        <div class="showroom-container">
-            <div v-if="pokemonsCreated.length > 0">
-
-            </div>
-            <div v-else>
-                <h4>No hay cartas creadas</h4>
-            </div>
+        <div class="showroom-container" v-if="pokemonsCreated.length > 0">
+            <CardComponent v-for="pokemon in pokemonsCreated" :key="pokemon.name" :pokemon="pokemon" />
+        </div>
+        <div class="showroom-container" v-else>
+            <h4>No hay cartas creadas</h4>
         </div>
     </div>
 </template>
@@ -60,15 +58,7 @@ import Bulbasaur from '../assets/bulbasaur.jpeg'
 import Squirtle from '../assets/squirtle.jpeg'
 
 // Objects
-const Pokemon = {
-    name: String,
-    hp: String,
-    attack: String,
-    speed: String,
-    defense: String,
-    image: String,
-    element: String
-}
+import Pokemon from '@/assets/pokemon.js'
 
 export default {
     components: {
@@ -101,7 +91,7 @@ export default {
                     element: 'water'
                 }
             },
-            pokemonsCreated: [],
+            pokemonsCreated: [new Pokemon("Tested", "50", "10", "5", "40", Pikachu, "light")],
             message: false
         }
     },
@@ -116,16 +106,7 @@ export default {
                 }
             }
         },
-        createCard() {
-            const pokemon = Pokemon
-            pokemon.name = "Tested"
-            pokemon.attack = "10"
-            pokemon.defense = "10"
-            pokemon.element = "light"
-            pokemon.hp = "10"
-            pokemon.image = Pikachu
-            this.pokemonsCreated.push(pokemon)
-        }
+        createCard() {}
     }
 }
 </script>
@@ -207,7 +188,8 @@ export default {
     border: 1px solid grey;
     height: 400px;
     display: flex;
-    justify-content: center;
+    align-content: flex-start;
+    padding: 10px;
 }
 
 </style>

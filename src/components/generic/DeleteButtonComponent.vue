@@ -26,7 +26,7 @@ export default {
 .button-container {
     width: auto;
     height: 100px;
-    border: 1px solid grey;
+    /* border: 1px solid grey; */
     display: flex;
     justify-content: center;
     align-items: center;
