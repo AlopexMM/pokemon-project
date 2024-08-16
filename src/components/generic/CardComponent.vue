@@ -1,13 +1,15 @@
 <template>
     <div class="card">
         <div class="image">
-            <img src="" alt="">
+            <img :src="pokemon.image" :alt="pokemon.name">
         </div>
         <div class="name">
-            <h3></h3>
+            <h3>{{ pokemon.name }}</h3>
         </div>
         <div class="stats">
-
+            <div class="stat">
+                
+            </div>
         </div>
     </div>
 </template>
