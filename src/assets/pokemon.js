@@ -1,7 +1,8 @@
 
 export default class Pokemon {
 
-    constructor(name, hp, attack, speed, defense, image, element){
+    constructor(id, name, hp, attack, speed, defense, image, element){
+        this.id = id
         this.name = name
         this.hp = hp
         this.attack = attack

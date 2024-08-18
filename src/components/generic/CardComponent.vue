@@ -1,5 +1,5 @@
 <template>
-    <div class="card roboto-regular">
+    <div class="card roboto-regular" :style="{'background': pokemon.element}">
         <div class="image">
             <img :src="pokemon.image" :alt="pokemon.name">
         </div>
@@ -40,7 +40,7 @@
                 </div>
             </div>
         </div>
-        <DeleteButtonComponent text="Borrar Pokemon"/>
+        <DeleteButtonComponent text="Borrar Pokemon" @click="$emit('deletePokemon', pokemon.id)"/>
     </div>
 </template>
 
@@ -53,27 +53,18 @@ export default {
     },
     components: {
         DeleteButtonComponent
-    }
+    },
 }
 </script>
 
 <style scoped>
-.roboto-regular {
-    font-family: "Roboto", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-}
-
 .card {
     width: 300px;
-    height: 400px;
+    height: 350px;
     display: flex;
     flex-direction: column;
-    /* background: rgba(255, 255, 0, 0.547); */
-    /* background: rgba(6, 189, 6, 0.708); */
-    /* background: #4070f4cf; */
     border-radius: 8px;
-    padding: 4px;
+    padding: 15px;
     border: 1px solid;
 }
 
@@ -130,7 +121,7 @@ img {
 .tooltip {
     position: absolute;
     right: -14px;
-    background: #333333c7;
+    background: #333;
     top: -28px;
     font-size: 9px;
     font-weight: 500;
@@ -146,7 +137,7 @@ img {
     bottom: -2px;
     height: 10px;
     width:10px;
-    background-color: #333333c7;
+    background-color: #333;
     z-index: -1;
     transform: translateX(-50%) rotate(45deg)
 }

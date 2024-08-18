@@ -10,13 +10,13 @@
                 </div>
             </div>
         </div>
-        <div v-if="message">
-            <MessageComponent text="Faltan datos para crear la carta" />
+        <div v-if="message.state" class="roboto-bold-italic">
+            <MessageComponent :text="message.msg" />
         </div>
-        <div class="name-container">
+        <div class="name-container roboto-black-italic">
             <InputTextComponent name="name" labelText="Nombre" ref="pokemonName"/>
         </div>
-        <div class="stats-container">
+        <div class="stats-container roboto-regular-italic">
             <div class="stat-container">
                 <InputNumberComponent name="hp" labelText="Vida 1-100" ref="pokemonHp"/>    
             </div>
@@ -34,9 +34,9 @@
             <PrimaryButtonComponent text="Crear Pokemon" @click="createCard"/>
         </div>
         <div class="showroom-container" v-if="pokemonsCreated.length > 0">
-            <CardComponent v-for="pokemon in pokemonsCreated" :key="pokemon.name" :pokemon="pokemon" />
+            <CardComponent v-for="pokemon in pokemonsCreated" :key="pokemon.id" :pokemon="pokemon" @deletePokemon="refreshPokemonList"/>
         </div>
-        <div class="showroom-container" v-else>
+        <div class="showroom-container roboto-black" style="justify-content: center;" v-else>
             <h4>No hay cartas creadas</h4>
         </div>
     </div>
@@ -76,23 +76,26 @@ export default {
                     image: Pikachu,
                     selected: false,
                     name: 'pikachu',
-                    element: 'light'
+                    element: 'rgba(255, 255, 0, 0.547)'
                 },
                 '2': {
                     image: Bulbasaur,
                     selected: false,
                     name: 'bulbasaur',
-                    element: 'herb'
+                    element: 'rgba(6, 189, 6, 0.708)'
                 },
                 '3': {
                     image: Squirtle,
                     selected: false,
                     name: 'squirtle',
-                    element: 'water'
+                    element: '#4070f4cf'
                 }
             },
-            pokemonsCreated: [new Pokemon("Tested", "50", "10", "5", "40", Pikachu, "light")],
-            message: false
+            pokemonsCreated: [],
+            message: {
+                state: false,
+                msg: ''
+            }
         }
     },
 
@@ -106,7 +109,68 @@ export default {
                 }
             }
         },
-        createCard() {}
+        showMessage(msg) {
+            this.message.state = true
+            this.message.msg = msg
+        },
+        resetForm() {
+            this.$refs.pokemonName.inputValue = ''
+            this.$refs.pokemonHp.inputValue = '0'
+            this.$refs.pokemonAttack.inputValue = '0'
+            this.$refs.pokemonSpeed.inputValue = '0'
+            this.$refs.pokemonDefense.inputValue = '0'
+            for (let key in this.pokemons) {
+                if (this.pokemons[key].selected) {
+                    this.pokemons[key].selected = false
+                }
+            }
+
+        },
+        createCard() {
+            // Search if the image is selected
+            let pokemonImg
+            for (let key in this.pokemons) {
+                if (this.pokemons[key].selected) {
+                    pokemonImg = this.pokemons[key]
+                    break
+                }
+            }
+    
+            // If there isn't an image run showMessage
+            if (pokemonImg === undefined) return this.showMessage("No se selecciono una imagen de pokemon")
+            
+            // Verify Name and Stats
+            if (this.$refs.pokemonName.inputValue == '0') return this.showMessage("Falta ingresar el Nombre")
+            if (this.$refs.pokemonHp.inputValue == '0') return this.showMessage("Falta ingresar la Vida")
+            if (this.$refs.pokemonAttack.inputValue == '0') return this.showMessage("Falta ingresar el Ataque")
+            if (this.$refs.pokemonSpeed.inputValue == '0') return this.showMessage("Falta ingresar la Velocidad")
+            if (this.$refs.pokemonDefense.inputValue == '0') return this.showMessage("Falta ingresar la Defensa")
+
+            // Create the pokemon and push it
+            let id = `${this.$refs.pokemonName.inputValue}-${Math.pow(10, Math.random())}`
+            let newPokemon = new Pokemon(
+                id,
+                this.$refs.pokemonName.inputValue,
+                this.$refs.pokemonHp.inputValue,
+                this.$refs.pokemonAttack.inputValue,
+                this.$refs.pokemonSpeed.inputValue,
+                this.$refs.pokemonDefense.inputValue,
+                pokemonImg.image,
+                pokemonImg.element
+            )
+            // Reset all stats and name
+            this.resetForm()
+            return this.pokemonsCreated.push(newPokemon)
+        },
+        refreshPokemonList(id) {
+            const newListPokemon = []
+            for (let p of this.pokemonsCreated) {
+                if (p.id != id) {
+                    newListPokemon.push(p)
+                }
+            }
+            return this.pokemonsCreated = newListPokemon
+        }
     }
 }
 </script>
@@ -190,6 +254,7 @@ export default {
     display: flex;
     align-content: flex-start;
     padding: 10px;
+    gap:5px;
 }
 
 </style>

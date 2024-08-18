@@ -25,7 +25,6 @@ export default {
     methods: {
         handleInput(event) {
             this.inputValue = event.target.value
-            console.log(this.inputValue)
         }
     }
 }

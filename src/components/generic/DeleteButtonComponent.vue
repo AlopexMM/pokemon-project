@@ -1,6 +1,6 @@
 <template>
     <div class="button-container">
-        <button class="create-button">{{ text }}</button>
+        <button class="create-button roboto-light">{{ text }}</button>
     </div>
 </template>
 
