@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="pokemon-list">
+        <div class="pokemon-list" automation-id="list-of-pokemon-img">
             <div v-for="pokemon in pokemons" :key="pokemon.name">
                 <div v-if="!pokemon.selected" class="card-container" @click="handlePokemonSelection(pokemon.name)">
                     <PokemonComponent :source="pokemon.image" :sourceName="pokemon.name" />
@@ -10,13 +10,13 @@
                 </div>
             </div>
         </div>
-        <div v-if="message.state" class="roboto-bold-italic">
+        <div v-if="message.state" class="roboto-bold-italic" automation-id="warning-message">
             <MessageComponent :text="message.msg" />
         </div>
-        <div class="name-container roboto-black-italic">
+        <div class="name-container roboto-black-italic" automation-id="name">
             <InputTextComponent name="name" labelText="Nombre" ref="pokemonName"/>
         </div>
-        <div class="stats-container roboto-regular-italic">
+        <div class="stats-container roboto-regular-italic" automation-id="stats">
             <div class="stat-container">
                 <InputNumberComponent name="hp" labelText="Vida 1-100" ref="pokemonHp"/>    
             </div>
@@ -30,13 +30,13 @@
                 <InputNumberComponent name="defense" labelText="Defensa 1-100" ref="pokemonDefense"/>
             </div>
         </div>
-        <div class="button-container">
+        <div class="button-container" automation-id="create-button-container">
             <PrimaryButtonComponent text="Crear Pokemon" @click="createCard"/>
         </div>
-        <div class="showroom-container" v-if="pokemonsCreated.length > 0">
+        <div class="showroom-container" v-if="pokemonsCreated.length > 0" automatio-it="showroom">
             <CardComponent v-for="pokemon in pokemonsCreated" :key="pokemon.id" :pokemon="pokemon" @deletePokemon="refreshPokemonList"/>
         </div>
-        <div class="showroom-container roboto-black" style="justify-content: center;" v-else>
+        <div class="showroom-container roboto-black" style="justify-content: center;" v-else automatio-it="showroom">
             <h4>No hay cartas creadas</h4>
         </div>
     </div>
