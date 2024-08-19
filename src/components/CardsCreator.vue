@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="roboto-black-italic title" automatio-id="title">
+        <div class="roboto-black-italic title" automation-id="title">
             <h1>Creador de cartas Pokemon</h1>
         </div>
         <div class="pokemon-list" automation-id="list-of-pokemon-img">
@@ -36,10 +36,10 @@
         <div class="button-container" automation-id="create-button-container">
             <PrimaryButtonComponent text="Crear Pokemon" @click="createCard"/>
         </div>
-        <div class="showroom-container" v-if="pokemonsCreated.length > 0" automatio-it="showroom">
+        <div class="showroom-container" v-if="pokemonsCreated.length > 0" automation-it="showroom">
             <CardComponent v-for="pokemon in pokemonsCreated" :key="pokemon.id" :pokemon="pokemon" @deletePokemon="refreshPokemonList"/>
         </div>
-        <div class="showroom-container roboto-black" style="justify-content: center;" v-else automatio-it="showroom">
+        <div class="showroom-container roboto-black" style="justify-content: center;" v-else automation-it="showroom">
             <h4>No hay cartas creadas</h4>
         </div>
     </div>
