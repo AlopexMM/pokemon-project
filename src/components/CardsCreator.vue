@@ -1,5 +1,8 @@
 <template>
     <div class="container">
+        <div class="roboto-black-italic title" automatio-id="title">
+            <h1>Creador de cartas Pokemon</h1>
+        </div>
         <div class="pokemon-list" automation-id="list-of-pokemon-img">
             <div v-for="pokemon in pokemons" :key="pokemon.name">
                 <div v-if="!pokemon.selected" class="card-container" @click="handlePokemonSelection(pokemon.name)">
@@ -181,6 +184,10 @@ export default {
     width: 900px;
     height: 100vh;
     margin: 20px;
+}
+
+.title {
+        margin: 10px 0 10px 0;
 }
 
 /* Pokemon monter to select */
