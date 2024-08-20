@@ -127,7 +127,7 @@ export default {
                     this.pokemons[key].selected = false
                 }
             }
-
+            this.message.state = false
         },
         createCard() {
             // Search if the image is selected
