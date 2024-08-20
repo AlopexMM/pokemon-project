@@ -36,7 +36,7 @@
         <div class="button-container" automation-id="create-button-container">
             <PrimaryButtonComponent text="Crear Pokemon" @click="createCard"/>
         </div>
-        <div class="showroom-container" v-if="pokemonsCreated.length > 0" automation-it="showroom">
+        <div class="showroom-container" v-if="pokemonsCreated.length > 0" automation-id="showroom">
             <CardComponent v-for="pokemon in pokemonsCreated" :key="pokemon.id" :pokemon="pokemon" @deletePokemon="refreshPokemonList"/>
         </div>
         <div class="showroom-container roboto-black" style="justify-content: center;" v-else automation-it="showroom">
