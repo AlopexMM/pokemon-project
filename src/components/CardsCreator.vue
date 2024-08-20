@@ -143,7 +143,7 @@ export default {
             if (pokemonImg === undefined) return this.showMessage("No se selecciono una imagen de pokemon")
             
             // Verify Name and Stats
-            if (this.$refs.pokemonName.inputValue == '0') return this.showMessage("Falta ingresar el Nombre")
+            if (this.$refs.pokemonName.inputValue === '') return this.showMessage("Falta ingresar el Nombre")
             if (this.$refs.pokemonHp.inputValue == '0') return this.showMessage("Falta ingresar la Vida")
             if (this.$refs.pokemonAttack.inputValue == '0') return this.showMessage("Falta ingresar el Ataque")
             if (this.$refs.pokemonSpeed.inputValue == '0') return this.showMessage("Falta ingresar la Velocidad")
