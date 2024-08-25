@@ -4,7 +4,12 @@ trigger:
 pool: Default
 
 steps:
+- script: | 
+    docker stop pokemon-creator    
+    docker rm pokemon-creator
+    docker rmi $(docker images | grep pokemon-creator | awk '{print $3}')
+  displayName: 'Delete old production version' 
 - script: docker build -t pokemon-creator:production .
   displayName: 'Docker build'
-- script : docker run -d --name pokemon-creator -p 8080:80 pokemon-creator:production
+- script : docker run -d --name pokemon-creator -p 8000:80 pokemon-creator:production
   displayName: 'Docker run'
