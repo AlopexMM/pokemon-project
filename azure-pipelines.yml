@@ -8,13 +8,11 @@ jobs:
   condition: always()
   displayName: 'Delete old production version'
   steps:
-    - script: docker stop pokemon-creator
-    - script: docker rm pokemon-creator
-    - script: docker rmi $(docker images | grep pokemon-creator | awk '{print $3}')
+    - script: bash check-container.sh
   
 - job: build
   dependsOn: setup
-  condition: succeededOrFailed()
+  condition: succeeded()
   displayName: 'Docker build'
   steps:
     - script: docker build -t pokemon-creator:production .
