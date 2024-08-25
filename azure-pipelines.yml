@@ -23,7 +23,7 @@ jobs:
 - job: run
   condition: succeeded()
   dependsOn: build
-  displayName: 'Docker build'
+  displayName: 'Docker run'
   steps:
     - script : docker run -d --name pokemon-creator -p 8000:80 pokemon-creator:production
     
