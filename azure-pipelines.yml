@@ -20,7 +20,7 @@ jobs:
     - script: docker build -t pokemon-creator:production .
   
 
-- job: 'Docker run'
+- job: run
   condition: succeeded()
   dependsOn: build
   displayName: 'Docker build'
