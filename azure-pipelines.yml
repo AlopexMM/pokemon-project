@@ -2,12 +2,12 @@ trigger:
   - none
 
 resources:
-repositories:
-  - repository: Tests
-    type: github
-    ref: main
-    name: AlopexMM/qa-pokemon-project
-    endpoint: AlopexMM
+  repositories:
+    - repository: Tests
+      type: github
+      ref: main
+      name: AlopexMM/qa-pokemon-project
+      endpoint: AlopexMM
 
 pool: Default
 
