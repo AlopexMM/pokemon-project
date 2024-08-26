@@ -1,6 +1,9 @@
 trigger:
   - stage
 
+variables:
+- group: Tokens
+
 resources:
   repositories:
     - repository: Tests
@@ -39,3 +42,6 @@ jobs:
     steps:
       - checkout: Tests
       - template: "azure-pipelines.yml@Tests"
+        env:
+          ENV: true
+          AZURE_TOKEN: $(AZURE)
