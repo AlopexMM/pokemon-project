@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo `$(docker ps | grep pokemon-creator)`
 if [[ $(docker ps | grep pokemon-creator) != "" ]]
 then
     docker stop pokemon-creator

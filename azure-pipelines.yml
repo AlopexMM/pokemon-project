@@ -38,3 +38,4 @@ jobs:
     displayName: "Test webapp"
     steps:
       - checkout: Tests
+      - template: "azure-pipelines.yml@Tests"
