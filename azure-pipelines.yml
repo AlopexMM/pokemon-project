@@ -1,41 +1,40 @@
 trigger:
-- none
+  - none
 
 resources:
- repositories:
-   - repository: Tests
-     type: github
-     ref: main
-     name: AlopexMM/qa-pokemon-project
-     endpoint: AlopexMM
+repositories:
+  - repository: Tests
+    type: github
+    ref: main
+    name: AlopexMM/qa-pokemon-project
+    endpoint: AlopexMM
 
 pool: Default
 
 jobs:
-- job: setup
-  condition: always()
-  displayName: 'Delete old production version'
-  steps:
-    - script: bash check-container.sh
-  
-- job: build
-  dependsOn: setup
-  condition: succeeded()
-  displayName: 'Docker build'
-  steps:
-    - script: docker build -t pokemon-creator:production .
-  
+  - job: setup
+    condition: always()
+    displayName: "Delete old production version"
+    steps:
+      - script: bash check-container.sh
 
-- job: run
-  condition: succeeded()
-  dependsOn: build
-  displayName: 'Docker run'
-  steps:
-    - script : docker run -d --name pokemon-creator -p 8000:80 pokemon-creator:production
+  - job: build
+    dependsOn: setup
+    condition: succeeded()
+    displayName: "Docker build"
+    steps:
+      - script: docker build -t pokemon-creator:production .
 
-- job: tests
-  condition: succeeded()
-  dependsOn: build
-  displayName: 'Test webapp'
-  steps:
-    - checkout: Tests
+  - job: run
+    condition: succeeded()
+    dependsOn: build
+    displayName: "Docker run"
+    steps:
+      - script: docker run -d --name pokemon-creator -p 8000:80 pokemon-creator:production
+
+  - job: tests
+    condition: succeeded()
+    dependsOn: build
+    displayName: "Test webapp"
+    steps:
+      - checkout: Tests
