@@ -1,5 +1,5 @@
 trigger:
-  - none
+  - stage
 
 resources:
   repositories:
@@ -34,7 +34,7 @@ jobs:
 
   - job: tests
     condition: succeeded()
-    dependsOn: build
+    dependsOn: run
     displayName: "Test webapp"
     steps:
       - checkout: Tests
