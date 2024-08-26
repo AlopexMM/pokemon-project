@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo `pwd`
 echo `$(docker ps | grep pokemon-creator)`
 if [[ $(docker ps | grep pokemon-creator) != "" ]]
 then
