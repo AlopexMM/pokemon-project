@@ -1,5 +1,13 @@
 trigger:
-- main
+- stage
+
+resources:
+ repositories:
+   - repository: tests
+     type: github
+     ref: main
+     name: AlopexMM/qa-pokemon-project
+     endpoint: AlopexMM
 
 pool: Default
 
@@ -24,4 +32,10 @@ jobs:
   displayName: 'Docker run'
   steps:
     - script : docker run -d --name pokemon-creator -p 8000:80 pokemon-creator:production
-    
+
+- job: test
+  condition: succeeded()
+  dependsOn: build
+  displayName: 'Test webapp'
+  steps:
+    - template: 'playwright-template.yml@tests'
