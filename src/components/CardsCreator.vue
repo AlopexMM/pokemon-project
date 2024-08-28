@@ -79,19 +79,19 @@ export default {
                     image: Pikachu,
                     selected: false,
                     name: 'pikachu',
-                    element: 'rgba(255, 255, 0, 0.547)'
+                    element: 'rgba(255, 255, 0, .3)'
                 },
                 '2': {
                     image: Bulbasaur,
                     selected: false,
                     name: 'bulbasaur',
-                    element: 'rgba(6, 189, 6, 0.708)'
+                    element: 'rgba(6, 189, 6, .3)'
                 },
                 '3': {
                     image: Squirtle,
                     selected: false,
                     name: 'squirtle',
-                    element: '#4070f4cf'
+                    element: 'rgba(64, 112, 244, 0.3)',
                 }
             },
             pokemonsCreated: [],

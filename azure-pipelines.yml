@@ -1,5 +1,5 @@
 trigger:
-  - stage
+  - none
 
 variables:
 - group: Tokens
