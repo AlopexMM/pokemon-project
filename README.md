@@ -1,19 +1,7 @@
-# pokemon-project
+# Instrucciones para la instalación del entorno de Pokemon project
 
-## Project setup
-```
-npm install
-```
+![VueJS App](./app/README.md)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+# Instrucciones para la instalación del entorno de testing con Python
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+![Playwright Python Tests](./python-tests/README.md)
