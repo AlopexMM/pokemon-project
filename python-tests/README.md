@@ -29,4 +29,4 @@ pip install pytest-playwright playwright -U
 ```
 
 # Documentación para los tests
-![docs](./documentacion/test_docs.md)
+[docs](./documentacion/test_docs.md)

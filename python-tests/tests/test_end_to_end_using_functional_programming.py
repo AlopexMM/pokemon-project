@@ -44,3 +44,14 @@ def test_create_card(page: Page):
 
     # Verificamos que se haya creado la carta
     expect(page.get_by_alt_text("Playwright")).to_be_visible()
+
+def test_delete_card(page: Page):
+    
+    # Corremos la generación de la carta
+    test_create_card(page)
+
+    # Ubicamos la carta y presionamos el boton borrar
+    page.locator("//div[contains(@class, \"card\")]/div[@class=\"name\"]/h3[text()=\"Playwright\"]/parent::div/parent::div/div/button").click()
+
+    # Verificamos que no se encuentre mas la carta
+    expect(page.get_by_alt_text("Playwright")).not_to_be_visible()
