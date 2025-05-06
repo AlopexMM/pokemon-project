@@ -2,7 +2,7 @@ import pytest
 
 from playwright.sync_api import Playwright
 
-@pytest.fixture(scope="function", autouse=True)
+@pytest.fixture(scope="function")
 def pokemon_config(playwright: Playwright):
     playwright.selectors.set_test_id_attribute("automation-id")
     browser = playwright.chromium.launch()
