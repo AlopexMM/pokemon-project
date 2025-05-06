@@ -275,4 +275,95 @@ def test_delete_card(pokemon_config: Page):
     expect(card_manager.card_created("Playwright")).not_to_be_visible()
 ```
 
-Como se puede ver en el codigo en cada test hemos tenido que inicializar la clase CardManager, esto podriamos dejarlo asi y estaria perfecto, la problematica comienza cuando son muchas paginas y hay mucho por testear para no tener que repetir el codigo de inicializar podremos juntar todos estos tests en una clase
+Como se puede ver en el codigo en cada test hemos tenido que inicializar la clase CardManager, esto podriamos dejarlo asi y estaria perfecto, la problematica comienza cuando son muchas paginas y hay mucho por testear para no tener que repetir el codigo podemos utilizar el fixture para correr el test con CardManager ya inicializado
+
+Primero creamos otro fixture
+
+```python
+# context_for_tests.py
+import pytest
+
+from playwright.sync_api import Playwright
+from playwright.sync_api import Page
+from ..page_objects.card_manager_page import CardManager
+
+@pytest.fixture(scope="function")
+def pokemon_config(playwright: Playwright) -> Page:
+    playwright.selectors.set_test_id_attribute("automation-id")
+    browser = playwright.chromium.launch()
+    context = browser.new_context()
+    page = context.new_page()
+    
+    # Vamos a la pagina del buscador
+    page.goto("http://localhost:8080")
+
+    return page
+
+@pytest.fixture(scope="function")
+def card_manager(pokemon_config: Page) -> CardManager:
+    return CardManager(pokemon_config)
+```
+
+Ahora utilizamos card_manager en las funciones.
+
+```python
+# test_end_to_end.py
+
+import re
+
+from playwright.sync_api import Page
+from playwright.sync_api import expect
+from ..test_fixtures.context_for_tests import card_manager
+from ..test_fixtures.context_for_tests import pokemon_config
+from ..page_objects.card_manager_page import CardManager
+
+def test_has_h1_title(card_manager: CardManager):
+    
+    # Derificamos que se encuentre en un h1 el texto "Creador de cartas Pokemon"
+    expect(card_manager.title_heading).to_have_text("Creador de cartas Pokemon")
+    # expect(page.get_by_role("heading", name="Creador de cartas Pokemon")).to_be_visible()
+
+def test_create_card(card_manager: CardManager):
+
+    # Seleccionamos un pokemon
+    card_manager.select_pokemon()
+
+    # Ingresamos un nombre al pokemon
+    card_manager.name_input.fill("Playwright")
+
+    # Ingresamos el valor de la vida
+    card_manager.life_input.fill("100")
+    
+    # Ingresamos el valor de la velocidad
+    card_manager.speed_input.fill("50")
+    
+    # Ingresamos el valor del ataque
+    card_manager.atack_input.fill("60")
+    
+    # Ingresamos el valor de la defensa
+    card_manager.defense_input.fill("10")
+
+    # Presionamos el boton crear Pokemon
+    card_manager.create_card.click()
+
+    # Verificamos que se haya creado la carta
+    expect(card_manager.card_created("Playwright")).to_be_visible()
+
+def test_delete_card(pokemon_config: Page):
+    
+    # Corremos la generación de la carta
+    card_manager = CardManager(pokemon_config)
+    test_create_card(card_manager)
+
+    # Ubicamos la carta y presionamos el boton borrar
+    card_manager.card_created_delete("Playwright")
+
+    # Verificamos que no se encuentre mas la carta
+    expect(card_manager.card_created("Playwright")).not_to_be_visible()
+```
+
+Como pueden ver cambiando el fixture nos ahorramos inicializar la clase excepto en test_delete_card que esta haciendo uso de test_create_card para crear la carta.
+
+## Video 4
+
+### Utilizar un scope de class

@@ -2,22 +2,17 @@ import re
 
 from playwright.sync_api import Page
 from playwright.sync_api import expect
+from ..test_fixtures.context_for_tests import card_manager
 from ..test_fixtures.context_for_tests import pokemon_config
 from ..page_objects.card_manager_page import CardManager
 
-
-def test_has_h1_title(pokemon_config: Page):
+def test_has_h1_title(card_manager: CardManager):
     
-    # Inicializamos CardManager
-    card_manager = CardManager(pokemon_config)
-
     # Derificamos que se encuentre en un h1 el texto "Creador de cartas Pokemon"
     expect(card_manager.title_heading).to_have_text("Creador de cartas Pokemon")
     # expect(page.get_by_role("heading", name="Creador de cartas Pokemon")).to_be_visible()
 
-def test_create_card(pokemon_config: Page):
-    # Inicializamos 
-    card_manager = CardManager(pokemon_config)
+def test_create_card(card_manager: CardManager):
 
     # Seleccionamos un pokemon
     card_manager.select_pokemon()
@@ -46,8 +41,8 @@ def test_create_card(pokemon_config: Page):
 def test_delete_card(pokemon_config: Page):
     
     # Corremos la generación de la carta
-    test_create_card(pokemon_config)
     card_manager = CardManager(pokemon_config)
+    test_create_card(card_manager)
 
     # Ubicamos la carta y presionamos el boton borrar
     card_manager.card_created_delete("Playwright")
