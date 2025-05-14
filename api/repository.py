@@ -4,7 +4,6 @@ from uuid import UUID
 
 import pathlib
 import json
-import asyncio
 
 DATABASE = "database.json"
 
@@ -25,10 +24,10 @@ class Database:
         self._save_file()
         return self._memory_database
     
-    def remove(self, id: str) -> bool:
+    def remove(self, id: str) -> list:
         self._memory_database = [pokemon for pokemon in self._memory_database if pokemon.id != id]
         self._save_file()
-        return True
+        return self._memory_database
 
     def update(self, pokemon: Pokemon):
         copy = [poke for poke in self._memory_database if poke.id != pokemon.id]
@@ -39,10 +38,8 @@ class Database:
 
     def _save_file(self):
         with open(DATABASE, "w") as file:
-            json.dumps(
-                [pokemon.model_dump() for pokemon in self._memory_database], 
-                file
-            )
+            file.write(json.dumps([pokemon.model_dump() for pokemon in self._memory_database]))
+            
     
     def pokemons(self):
         return self._memory_database
@@ -56,7 +53,7 @@ class PokemonRepo:
         pokemon.id = uuid4()
         return self._database.add(pokemon)
     
-    def remove(self, id: UUID) -> bool:
+    def remove(self, id: UUID) -> list:
         return self._database.remove(id)
     
     def update(self, pokemon: Pokemon) -> list:
@@ -64,6 +61,3 @@ class PokemonRepo:
     
     def pokemons(self) -> list:
         return self._database.pokemons()
-    
-
-    
