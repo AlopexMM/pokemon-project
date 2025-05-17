@@ -8,20 +8,19 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
 
-export default {
+export default defineComponent({
     props: {
-        'name': String,
-        'labelText': String
+        name : { type: string },
+        labelText : { type: string }
     },
+    setup() {
+        const inputValue = ref<string>('')
 
-    data() {
-        return {
-            inputValue:'0'
-        }
+        return { inputValue }
     },
-
     methods: {
         handleInput(event) {
             let n = parseInt(event.target.value)
@@ -36,7 +35,7 @@ export default {
         }
     },
 
-}
+})
 </script>
 
 <style scoped>

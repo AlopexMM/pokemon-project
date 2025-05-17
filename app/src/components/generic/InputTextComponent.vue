@@ -8,26 +8,25 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
 
-export default {
+export default defineComponent({
     props: {
-        'name': String,
-        'labelText': String
+        name: { type: string },
+        labelText: { type: string }
     },
+    setup() {
+        const inputValue = ref<string>('')
 
-    data() {
-        return {
-            inputValue: ''
-        }
+        return { inputValue }
     },
-
     methods: {
         handleInput(event) {
             this.inputValue = event.target.value
         }
     }
-}
+})
 </script>
 
 <style scoped>

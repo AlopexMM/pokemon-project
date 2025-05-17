@@ -45,7 +45,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 
 // Components
 import InputTextComponent from './generic/InputTextComponent.vue'
@@ -55,15 +55,12 @@ import PrimaryButtonComponent from './generic/PrimaryButtonComponent.vue'
 import MessageComponent from './generic/MessageComponent.vue'
 import CardComponent from './generic/CardComponent.vue'
 
-// Images
-import Pikachu from '../assets/pikachu.jpeg'
-import Bulbasaur from '../assets/bulbasaur.jpeg'
-import Squirtle from '../assets/squirtle.jpeg'
-
 // Objects
-import Pokemon from '@/assets/pokemon.js'
+import {PokemonOption, PokemonCard } from '../assets/types/pokemon'
+import Message from '../assets/types/message'
+import { defineComponent, ref } from 'vue'
 
-export default {
+export default defineComponent({
     components: {
         InputTextComponent,
         InputNumberComponent,
@@ -72,36 +69,32 @@ export default {
         MessageComponent,
         CardComponent
     },
-    data() {
-        return {
-            pokemons: {
-                '1': {
-                    image: Pikachu,
+    setup() {
+
+        const pokemons: PokemonOption[] = [
+                {
+                    image: '../assets/images/pikachu.jpeg',
                     selected: false,
                     name: 'pikachu',
                     element: 'rgba(255, 255, 0, .3)'
                 },
-                '2': {
-                    image: Bulbasaur,
+                {
+                    image: '../assets/images/bulbasaur.jpeg',
                     selected: false,
                     name: 'bulbasaur',
                     element: 'rgba(6, 189, 6, .3)'
                 },
-                '3': {
-                    image: Squirtle,
+                {
+                    image: '../assets/images/squirtle.jpeg',
                     selected: false,
                     name: 'squirtle',
                     element: 'rgba(64, 112, 244, 0.3)',
                 }
-            },
-            pokemonsCreated: [],
-            message: {
-                state: false,
-                msg: ''
-            }
-        }
+            ]
+        const pokemonsCreated = ref<PokemonCard[]>([])
+        const message = ref<Message>({ state: false, msg: ''})
+        return { pokemons, pokemonsCreated, message }
     },
-
     methods: {
         handlePokemonSelection(p) {
             for (const key in this.pokemons) {
@@ -173,9 +166,10 @@ export default {
                 }
             }
             return this.pokemonsCreated = newListPokemon
-        }
+        },
+
     }
-}
+})
 </script>
 
 <style scoped>

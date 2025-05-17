@@ -1,15 +1,17 @@
 <template>
     <div class="button-container">
-        <button class="create-button roboto-light">{{text}}</button>
+        <button class="create-button roboto-light">{{ text }}</button>
     </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
     props: {
-        text: String
+        text: { require: true, type: string },
     }
-}
+})
 </script>
 
 <style scoped>

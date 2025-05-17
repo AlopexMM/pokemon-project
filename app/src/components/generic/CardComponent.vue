@@ -57,17 +57,19 @@
     </div>
 </template>
 
-<script>
-import Pokemon from '@/assets/pokemon';
+<script lang="ts">
+import { PokemonCard } from '../../assets/types/pokemon';
 import DeleteButtonComponent from './DeleteButtonComponent.vue';
-export default {
+import { defineComponent, PropType, ref } from 'vue'
+
+export default defineComponent ({
     props: {
-        pokemon: Pokemon
+        pokemon: { require: true, type: Object as PropType<PokemonCard> }
     },
-    data() {
-        return {
-            pinout: false,
-        }
+    setup() {
+        const pinout = ref<boolean>(false)
+
+        return { pinout }
     },
     components: {
         DeleteButtonComponent
@@ -77,7 +79,7 @@ export default {
             this.pinout = !this.pinout
         }
     }
-}
+})
 </script>
 
 <style scoped>

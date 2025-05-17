@@ -2,15 +2,16 @@
   <CardsCreator/>
 </template>
 
-<script>
-import CardsCreator from './components/CardsCreator.vue'
+<script lang="ts">
+import CardsCreator from './components/CardsCreator.vue';
+import { defineComponent }  from 'vue';
 
-export default {
+export default defineComponent({
   name: 'App',
   components: {
     CardsCreator
   }
-}
+})
 </script>
 
 <style>
