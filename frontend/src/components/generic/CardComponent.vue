@@ -60,24 +60,23 @@
 <script lang="ts">
 import { PokemonCard } from '../../assets/types/pokemon';
 import DeleteButtonComponent from './DeleteButtonComponent.vue';
-import { defineComponent, PropType, ref } from 'vue'
+import { defineComponent, PropType, ref, defineEmits } from 'vue'
 
 export default defineComponent ({
     props: {
         pokemon: { require: true, type: Object as PropType<PokemonCard> }
     },
-    setup() {
-        const pinout = ref<boolean>(false)
-
-        return { pinout }
-    },
     components: {
         DeleteButtonComponent
     },
-    methods: {
-        pinoutSwitch() {
-            this.pinout = !this.pinout
+    setup() {
+        const pinout = ref<boolean>(false)
+        const emit = defineEmits(["deletePokemon"])
+        
+        const pinoutSwitch = () => {
+            pinout.value = !pinout.value
         }
+        return { pinout, pinoutSwitch, emit }
     }
 })
 </script>

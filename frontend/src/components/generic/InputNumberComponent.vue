@@ -13,27 +13,25 @@ import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
     props: {
-        name : { type: string },
-        labelText : { type: string }
+        name : { type: String },
+        labelText : { type: String }
     },
     setup() {
-        const inputValue = ref<string>('')
+        const inputValue = ref<string | number>("0")
 
-        return { inputValue }
-    },
-    methods: {
-        handleInput(event) {
-            let n = parseInt(event.target.value)
-            if ( n != NaN) {
+        const handleInput = (event: Event) => {
+            let e = event.target as HTMLInputElement
+            let n = parseInt(e.value)
+            if ( n != Number.NaN) {
                 if (n > 0 && n <= 100) {
-                    this.inputValue = `${n}`
+                    inputValue.value = `${n}`
                     return
                 }
             }
-            this.inputValue = '0'
-
+            inputValue.value = "0"
         }
-    },
+        return { inputValue, handleInput }
+    }
 
 })
 </script>

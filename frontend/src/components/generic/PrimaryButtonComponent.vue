@@ -9,7 +9,7 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
     props: {
-        text: { type: string }
+        text: { require: true, type: String },
     }
 })
 </script>
@@ -18,20 +18,11 @@ export default defineComponent({
 .create-button {
     width: auto;
     height: 40px;
-    background: rgb(200, 59, 59);
+    background: rgb(36, 151, 36);
     border-radius: 6px;
     color: white;
     text-align: center;
     border: none;
-}
-
-.button-container {
-    width: auto;
-    height: 100px;
-    /* border: 1px solid grey; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .create-button:hover {

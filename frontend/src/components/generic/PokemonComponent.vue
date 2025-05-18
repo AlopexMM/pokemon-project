@@ -6,8 +6,8 @@
 import { defineComponent } from 'vue'
 export default defineComponent({
     props: {
-        source: { type: string },
-        sourceName: { type: string },
+        source: { type: String },
+        sourceName: { type: String },
     }
 })
 </script>
