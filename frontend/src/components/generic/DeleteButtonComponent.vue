@@ -1,41 +1,34 @@
 <template>
-    <div class="button-container">
-        <button class="create-button roboto-light">{{ text }}</button>
-    </div>
+  <div class="button-container">
+    <button class="create-button roboto-light">{{ text }}</button>
+  </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-    props: {
-        text: { type: String }
-    }
-})
+<script setup lang="ts">
+const props = defineProps<{ text: string }>()
 </script>
 
 <style scoped>
 .create-button {
-    width: auto;
-    height: 40px;
-    background: rgb(200, 59, 59);
-    border-radius: 6px;
-    color: white;
-    text-align: center;
-    border: none;
+  width: auto;
+  height: 40px;
+  background: rgb(200, 59, 59);
+  border-radius: 6px;
+  color: white;
+  text-align: center;
+  border: none;
 }
 
 .button-container {
-    width: auto;
-    height: 100px;
-    /* border: 1px solid grey; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: auto;
+  height: 100px;
+  /* border: 1px solid grey; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .create-button:hover {
-    font-weight: bold;
+  font-weight: bold;
 }
-
 </style>

@@ -59,7 +59,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 // Components
 import InputTextComponent from './generic/InputTextComponent.vue'
 import InputNumberComponent from './generic/InputNumberComponent.vue'
@@ -70,12 +70,12 @@ import CardComponent from './generic/CardComponent.vue'
 
 // Objects
 import {
-  IPokemonCard,
-  PokemonOption,
+  type IPokemonCard,
+  type PokemonOption,
   PokemonCard,
-  PokemonOptionNames,
+  type PokemonOptionNames,
 } from '../assets/types/pokemon'
-import { Message } from '../assets/types/message'
+import type { Message } from '../assets/types/message'
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({

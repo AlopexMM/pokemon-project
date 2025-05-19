@@ -14,25 +14,13 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
-
-export default defineComponent({
-  props: {
-    name: { type: String },
-    labelText: { type: String },
-  },
-  setup() {
-    const inputValue = ref<string>('')
-
-    const handleInput = (event: Event) => {
-      const e = event.target as HTMLInputElement
-      inputValue.value = e.value
-    }
-
-    return { inputValue, handleInput }
-  },
-})
+<script setup lang="ts">
+const props = defineProps<{ name: string; labelText: string }>()
+const inputValue = defineModel('')
+function handleInput(event: Event) {
+  const e = event.target as HTMLInputElement
+  inputValue.value = e.value
+}
 </script>
 
 <style scoped>
