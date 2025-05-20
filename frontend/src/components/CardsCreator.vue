@@ -1,3 +1,135 @@
+<script setup lang="ts">
+// Components
+import InputTextComponent from './generic/InputTextComponent.vue'
+import InputNumberComponent from './generic/InputNumberComponent.vue'
+import PokemonComponent from './generic/PokemonComponent.vue'
+import PrimaryButtonComponent from './generic/PrimaryButtonComponent.vue'
+import MessageComponent from './generic/MessageComponent.vue'
+import CardComponent from './generic/CardComponent.vue'
+
+// Objects
+import {
+  type IPokemonCard,
+  type IPokemonOption,
+  PokemonCard,
+  type TPokemonOptionNames,
+} from '../assets/types/pokemon'
+import type { Message } from '../assets/types/message'
+import { ref } from 'vue'
+// Variables
+const pokemons: IPokemonOption[] = [
+  {
+    image: 'src/assets/images/pikachu.jpeg',
+    selected: false,
+    name: 'pikachu',
+    element: 'rgba(255, 255, 0, .3)',
+  },
+  {
+    image: 'src/assets/images/bulbasaur.jpeg',
+    selected: false,
+    name: 'bulbasaur',
+    element: 'rgba(6, 189, 6, .3)',
+  },
+  {
+    image: 'src/assets/images/squirtle.jpeg',
+    selected: false,
+    name: 'squirtle',
+    element: 'rgba(64, 112, 244, 0.3)',
+  },
+]
+const pokemonsCreated = ref<IPokemonCard[]>([])
+const message = ref<Message>({ state: false, msg: '' })
+const pokemonName = ref<string>('')
+const pokemonHp = ref<string>('0')
+const pokemonAttack = ref<string>('0')
+const pokemonDefense = ref<string>('0')
+const pokemonSpeed = ref<string>('0')
+
+// Methods
+
+/**
+ *This method receive the name of the pakemon and change the state for the image to know what image was selected
+ */
+function handlePokemonSelection(pokeName: TPokemonOptionNames) {
+  for (const key in pokemons) {
+    if (pokemons[key].name == pokeName) {
+      pokemons[key].selected = !pokemons[key].selected
+    } else {
+      pokemons[key].selected = false
+    }
+  }
+}
+
+function showMessage(msg: string) {
+  message.value.state = true
+  message.value.msg = msg
+}
+
+function resetForm() {
+  pokemonName.value = ''
+  pokemonHp.value = '0'
+  pokemonAttack.value = '0'
+  pokemonSpeed.value = '0'
+  pokemonDefense.value = '0'
+  for (const key in pokemons) {
+    if (pokemons[key].selected) {
+      pokemons[key].selected = false
+    }
+  }
+  message.value.state = false
+}
+
+function createCard() {
+  // Search if the image is selected
+  let pokemonImg
+  for (const key in pokemons) {
+    if (pokemons[key].selected) {
+      pokemonImg = pokemons[key]
+      break
+    }
+  }
+
+  // If there isn't an image run showMessage
+  if (pokemonImg === undefined) return showMessage('No se selecciono una imagen de pokemon')
+
+  // Verify Name and Stats
+  console.log(pokemonName)
+  if (pokemonName.value === '') return showMessage('Falta ingresar el Nombre')
+  if (pokemonHp.value == '0') return showMessage('Falta ingresar la Vida')
+  if (pokemonAttack.value == '0') return showMessage('Falta ingresar el Ataque')
+  if (pokemonSpeed.value == '0') return showMessage('Falta ingresar la Velocidad')
+  if (pokemonDefense.value == '0') return showMessage('Falta ingresar la Defensa')
+
+  // Create the pokemon and push it
+  const id = `${pokemonName.value}-${Math.pow(10, Math.random())}`
+
+  // Reset all stats and name
+  resetForm()
+  return pokemonsCreated.value.push(
+    new PokemonCard(
+      id,
+      pokemonName.value,
+      parseInt(pokemonHp.value),
+      parseInt(pokemonAttack.value),
+      parseInt(pokemonSpeed.value),
+      parseInt(pokemonDefense.value),
+      pokemonImg.image,
+      pokemonImg.element,
+    ),
+  )
+}
+
+function refreshPokemonList(id: string) {
+  const newListPokemon: IPokemonCard[] = []
+  for (const p of pokemonsCreated.value) {
+    if (p.id != id) {
+      newListPokemon.push(p)
+    }
+  }
+  return (pokemonsCreated.value = newListPokemon)
+}
+</script>
+
 <template>
   <div class="container">
     <div class="roboto-black-italic title" automation-id="title">
@@ -58,161 +190,6 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-// Components
-import InputTextComponent from './generic/InputTextComponent.vue'
-import InputNumberComponent from './generic/InputNumberComponent.vue'
-import PokemonComponent from './generic/PokemonComponent.vue'
-import PrimaryButtonComponent from './generic/PrimaryButtonComponent.vue'
-import MessageComponent from './generic/MessageComponent.vue'
-import CardComponent from './generic/CardComponent.vue'
-
-// Objects
-import {
-  type IPokemonCard,
-  type PokemonOption,
-  PokemonCard,
-  type PokemonOptionNames,
-} from '../assets/types/pokemon'
-import type { Message } from '../assets/types/message'
-import { defineComponent, ref } from 'vue'
-
-export default defineComponent({
-  components: {
-    InputTextComponent,
-    InputNumberComponent,
-    PokemonComponent,
-    PrimaryButtonComponent,
-    MessageComponent,
-    CardComponent,
-  },
-  setup() {
-    // Variables
-    const pokemons: PokemonOption[] = [
-      {
-        image: 'src/assets/images/pikachu.jpeg',
-        selected: false,
-        name: 'pikachu',
-        element: 'rgba(255, 255, 0, .3)',
-      },
-      {
-        image: 'src/assets/images/bulbasaur.jpeg',
-        selected: false,
-        name: 'bulbasaur',
-        element: 'rgba(6, 189, 6, .3)',
-      },
-      {
-        image: 'src/assets/images/squirtle.jpeg',
-        selected: false,
-        name: 'squirtle',
-        element: 'rgba(64, 112, 244, 0.3)',
-      },
-    ]
-    const pokemonsCreated = ref<IPokemonCard[]>([])
-    const message = ref<Message>({ state: false, msg: '' })
-    const pokemonName = ref<string>('')
-    const pokemonHp = ref<string>('0')
-    const pokemonAttack = ref<string>('0')
-    const pokemonDefense = ref<string>('0')
-    const pokemonSpeed = ref<string>('0')
-
-    // Methods
-
-    /**
-     *This method receive the name of the pakemon and change the state for the image to know what image was selected
-     */
-    const handlePokemonSelection = (pokeName: PokemonOptionNames) => {
-      for (const key in pokemons) {
-        if (pokemons[key].name == pokeName) {
-          pokemons[key].selected = !pokemons[key].selected
-        } else {
-          pokemons[key].selected = false
-        }
-      }
-    }
-
-    const showMessage = (msg: string) => {
-      message.value.state = true
-      message.value.msg = msg
-    }
-
-    const resetForm = () => {
-      pokemonName.value = ''
-      pokemonHp.value = '0'
-      pokemonAttack.value = '0'
-      pokemonSpeed.value = '0'
-      pokemonDefense.value = '0'
-      for (const key in pokemons) {
-        if (pokemons[key].selected) {
-          pokemons[key].selected = false
-        }
-      }
-      message.value.state = false
-    }
-
-    const createCard = () => {
-      // Search if the image is selected
-      let pokemonImg
-      for (const key in pokemons) {
-        if (pokemons[key].selected) {
-          pokemonImg = pokemons[key]
-          break
-        }
-      }
-
-      // If there isn't an image run showMessage
-      if (pokemonImg === undefined) return showMessage('No se selecciono una imagen de pokemon')
-
-      // Verify Name and Stats
-      console.log(pokemonName)
-      if (pokemonName.value === '') return showMessage('Falta ingresar el Nombre')
-      if (pokemonHp.value == '0') return showMessage('Falta ingresar la Vida')
-      if (pokemonAttack.value == '0') return showMessage('Falta ingresar el Ataque')
-      if (pokemonSpeed.value == '0') return showMessage('Falta ingresar la Velocidad')
-      if (pokemonDefense.value == '0') return showMessage('Falta ingresar la Defensa')
-
-      // Create the pokemon and push it
-      const id = `${pokemonName.value}-${Math.pow(10, Math.random())}`
-
-      // Reset all stats and name
-      resetForm()
-      return pokemonsCreated.value.push(
-        new PokemonCard(
-          id,
-          pokemonName.value,
-          parseInt(pokemonHp.value),
-          parseInt(pokemonAttack.value),
-          parseInt(pokemonSpeed.value),
-          parseInt(pokemonDefense.value),
-          pokemonImg.image,
-          pokemonImg.element,
-        ),
-      )
-    }
-
-    const refreshPokemonList = (id: string) => {
-      const newListPokemon: IPokemonCard[] = []
-      for (const p of pokemonsCreated.value) {
-        if (p.id != id) {
-          newListPokemon.push(p)
-        }
-      }
-      return (pokemonsCreated.value = newListPokemon)
-    }
-
-    return {
-      pokemons,
-      pokemonsCreated,
-      message,
-      handlePokemonSelection,
-      createCard,
-      refreshPokemonList,
-      resetForm,
-    }
-  },
-})
-</script>
 
 <style scoped>
 .container {
