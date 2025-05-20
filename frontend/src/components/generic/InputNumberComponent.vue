@@ -1,3 +1,18 @@
+<script setup lang="ts">
+const props = defineProps<{ name: string; labelText: string }>()
+const inputValue = defineModel({ default: "0" })
+
+function handleInput(event: Event) {
+  const e = event.target as HTMLInputElement
+  if (Number.isNaN(e.valueAsNumber)) 
+  {
+    e.value = "0"
+    inputValue.value = "0"
+  }
+  if (e.valueAsNumber > 100) inputValue.value = "0"
+}
+</script>
+
 <template>
   <div class="input-container">
     <label v-bind:for="name">
@@ -13,23 +28,6 @@
     />
   </div>
 </template>
-
-<script setup lang="ts">
-const props = defineProps<{ name: string; labelText: string }>()
-const inputValue = defineModel('0')
-
-function handleInput(event: Event) {
-  const e = event.target as HTMLInputElement
-  const n = parseInt(e.value)
-  if (n != Number.NaN) {
-    if (n > 0 && n <= 100) {
-      inputValue.value = `${n}`
-      return
-    }
-  }
-  inputValue.value = '0'
-}
-</script>
 
 <style scoped>
 .input-container {

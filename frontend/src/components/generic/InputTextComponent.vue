@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 const props = defineProps<{ name: string; labelText: string }>()
-const inputValue = defineModel('')
+const inputValue = defineModel({ default: ''})
 function handleInput(event: Event) {
   const e = event.target as HTMLInputElement
   inputValue.value = e.value

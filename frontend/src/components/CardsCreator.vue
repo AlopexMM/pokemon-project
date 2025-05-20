@@ -39,11 +39,11 @@ const pokemons: IPokemonOption[] = [
 ]
 const pokemonsCreated = ref<IPokemonCard[]>([])
 const message = ref<Message>({ state: false, msg: '' })
-const pokemonName = ref<string>('')
-const pokemonHp = ref<string>('0')
-const pokemonAttack = ref<string>('0')
-const pokemonDefense = ref<string>('0')
-const pokemonSpeed = ref<string>('0')
+const pokemonName = ref()
+const pokemonHp = ref<string>()
+const pokemonAttack = ref<string>()
+const pokemonDefense = ref<string>()
+const pokemonSpeed = ref<string>()
 
 // Methods
 
@@ -93,7 +93,6 @@ function createCard() {
   if (pokemonImg === undefined) return showMessage('No se selecciono una imagen de pokemon')
 
   // Verify Name and Stats
-  console.log(pokemonName)
   if (pokemonName.value === '') return showMessage('Falta ingresar el Nombre')
   if (pokemonHp.value == '0') return showMessage('Falta ingresar la Vida')
   if (pokemonAttack.value == '0') return showMessage('Falta ingresar el Ataque')
@@ -103,9 +102,8 @@ function createCard() {
   // Create the pokemon and push it
   const id = `${pokemonName.value}-${Math.pow(10, Math.random())}`
 
-  // Reset all stats and name
-  resetForm()
-  return pokemonsCreated.value.push(
+  // Adding card
+  pokemonsCreated.value.push(
     new PokemonCard(
       id,
       pokemonName.value,
@@ -117,6 +115,10 @@ function createCard() {
       pokemonImg.element,
     ),
   )
+
+  // Reset all stats and name
+  resetForm()
+  return 
 }
 
 function refreshPokemonList(id: string) {
@@ -153,20 +155,20 @@ function refreshPokemonList(id: string) {
       <MessageComponent :text="message.msg" />
     </div>
     <div class="name-container roboto-black-italic" automation-id="name">
-      <InputTextComponent name="name" labelText="Nombre" ref="pokemonName" />
+      <InputTextComponent name="name" labelText="Nombre" v-model="pokemonName" />
     </div>
     <div class="stats-container roboto-regular-italic" automation-id="stats">
       <div class="stat-container">
-        <InputNumberComponent name="hp" labelText="Vida 1-100" ref="pokemonHp" />
+        <InputNumberComponent name="hp" labelText="Vida 1-100" v-model="pokemonHp" />
       </div>
       <div class="stat-container">
-        <InputNumberComponent name="speed" labelText="Velocidad 1-100" ref="pokemonSpeed" />
+        <InputNumberComponent name="speed" labelText="Velocidad 1-100" v-model="pokemonSpeed" />
       </div>
       <div class="stat-container">
-        <InputNumberComponent name="attack" labelText="Ataque 1-100" ref="pokemonAttack" />
+        <InputNumberComponent name="attack" labelText="Ataque 1-100" v-model="pokemonAttack" />
       </div>
       <div class="stat-container">
-        <InputNumberComponent name="defense" labelText="Defensa 1-100" ref="pokemonDefense" />
+        <InputNumberComponent name="defense" labelText="Defensa 1-100" v-model="pokemonDefense" />
       </div>
     </div>
     <div class="button-container" automation-id="create-button-container">
