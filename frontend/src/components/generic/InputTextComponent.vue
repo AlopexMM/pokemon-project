@@ -1,3 +1,12 @@
+<script setup lang="ts">
+const props = defineProps<{ name: string; labelText: string }>()
+const inputValue = defineModel({ default: '' })
+function handleInput(event: Event) {
+  const e = event.target as HTMLInputElement
+  inputValue.value = e.value
+}
+</script>
+
 <template>
   <div class="input-container">
     <label v-bind:for="name">
@@ -13,15 +22,6 @@
     />
   </div>
 </template>
-
-<script setup lang="ts">
-const props = defineProps<{ name: string; labelText: string }>()
-const inputValue = defineModel({ default: ''})
-function handleInput(event: Event) {
-  const e = event.target as HTMLInputElement
-  inputValue.value = e.value
-}
-</script>
 
 <style scoped>
 .input-container {

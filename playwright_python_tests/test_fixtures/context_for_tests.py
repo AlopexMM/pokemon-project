@@ -12,7 +12,7 @@ def pokemon_config(playwright: Playwright) -> Page:
     page = context.new_page()
     
     # Vamos a la pagina del buscador
-    page.goto("http://localhost:8080")
+    page.goto("http://localhost:5173/")
 
     return page
 

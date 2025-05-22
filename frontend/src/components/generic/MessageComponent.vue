@@ -1,12 +1,12 @@
+<script setup lang="ts">
+const props = defineProps<{ text: string }>()
+</script>
+
 <template>
   <div class="message-warning">
     <p>{{ text }}</p>
   </div>
 </template>
-
-<script setup lang="ts">
-const props = defineProps<{ text: string }>()
-</script>
 
 <style scoped>
 .message-warning {

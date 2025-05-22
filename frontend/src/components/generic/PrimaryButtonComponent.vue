@@ -1,12 +1,12 @@
+<script setup lang="ts">
+const props = defineProps<{ text: string }>()
+</script>
+
 <template>
   <div class="button-container">
     <button class="create-button roboto-light">{{ text }}</button>
   </div>
 </template>
-
-<script setup lang="ts">
-const props = defineProps<{ text: string }>()
-</script>
 
 <style scoped>
 .create-button {

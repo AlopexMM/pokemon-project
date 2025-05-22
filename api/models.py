@@ -12,6 +12,7 @@ class Pokemon(BaseModel):
     speed: int = Field(..., gt=0 , le=100, description="This Speed must be in between 1 and 100")
     life: int = Field(..., gt=0 , le=100, description="This Life must be in between 1 and 100")
     image: str
+    element: str
 
     @field_serializer('id')
     def serialize_id(self, id: UUID):

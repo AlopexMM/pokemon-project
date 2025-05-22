@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi import status
 from uuid import UUID
 
@@ -6,6 +7,19 @@ from .repository import PokemonRepo
 from .models import Pokemon
 
 app = FastAPI()
+
+origins = [
+    "*",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
+
 database = PokemonRepo()
 
 @app.get("/")

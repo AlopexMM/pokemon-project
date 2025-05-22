@@ -11,11 +11,12 @@ import CardComponent from './generic/CardComponent.vue'
 import {
   type IPokemonCard,
   type IPokemonOption,
-  PokemonCard,
   type TPokemonOptionNames,
 } from '../assets/types/pokemon'
+import { pokemonAPI } from '../assets/api'
 import type { Message } from '../assets/types/message'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+
 // Variables
 const pokemons: IPokemonOption[] = [
   {
@@ -39,18 +40,18 @@ const pokemons: IPokemonOption[] = [
 ]
 const pokemonsCreated = ref<IPokemonCard[]>([])
 const message = ref<Message>({ state: false, msg: '' })
-const pokemonName = ref()
-const pokemonHp = ref<string>()
-const pokemonAttack = ref<string>()
-const pokemonDefense = ref<string>()
-const pokemonSpeed = ref<string>()
+const pokemonName = ref('')
+const pokemonHp = ref<string>('0')
+const pokemonAttack = ref<string>('0')
+const pokemonDefense = ref<string>('0')
+const pokemonSpeed = ref<string>('0')
 
 // Methods
 
 /**
  *This method receive the name of the pakemon and change the state for the image to know what image was selected
  */
-function handlePokemonSelection(pokeName: TPokemonOptionNames) {
+async function handlePokemonSelection(pokeName: TPokemonOptionNames) {
   for (const key in pokemons) {
     if (pokemons[key].name == pokeName) {
       pokemons[key].selected = !pokemons[key].selected
@@ -60,12 +61,12 @@ function handlePokemonSelection(pokeName: TPokemonOptionNames) {
   }
 }
 
-function showMessage(msg: string) {
+async function showMessage(msg: string) {
   message.value.state = true
   message.value.msg = msg
 }
 
-function resetForm() {
+async function resetForm() {
   pokemonName.value = ''
   pokemonHp.value = '0'
   pokemonAttack.value = '0'
@@ -79,7 +80,7 @@ function resetForm() {
   message.value.state = false
 }
 
-function createCard() {
+async function createCard() {
   // Search if the image is selected
   let pokemonImg
   for (const key in pokemons) {
@@ -99,37 +100,29 @@ function createCard() {
   if (pokemonSpeed.value == '0') return showMessage('Falta ingresar la Velocidad')
   if (pokemonDefense.value == '0') return showMessage('Falta ingresar la Defensa')
 
-  // Create the pokemon and push it
-  const id = `${pokemonName.value}-${Math.pow(10, Math.random())}`
-
   // Adding card
-  pokemonsCreated.value.push(
-    new PokemonCard(
-      id,
-      pokemonName.value,
-      parseInt(pokemonHp.value),
-      parseInt(pokemonAttack.value),
-      parseInt(pokemonSpeed.value),
-      parseInt(pokemonDefense.value),
-      pokemonImg.image,
-      pokemonImg.element,
-    ),
-  )
+  await pokemonAPI.add({
+    id: 'null',
+    name: pokemonName.value,
+    hp: parseInt(pokemonHp.value),
+    attack: parseInt(pokemonAttack.value),
+    speed: parseInt(pokemonSpeed.value),
+    defense: parseInt(pokemonDefense.value),
+    image: pokemonImg.image,
+    element: pokemonImg.element,
+  })
+  pokemonsCreated.value = await pokemonAPI.list()
 
   // Reset all stats and name
-  resetForm()
-  return 
+  await resetForm()
+  return
 }
 
-function refreshPokemonList(id: string) {
-  const newListPokemon: IPokemonCard[] = []
-  for (const p of pokemonsCreated.value) {
-    if (p.id != id) {
-      newListPokemon.push(p)
-    }
-  }
-  return (pokemonsCreated.value = newListPokemon)
+async function refreshPokemonList() {
+  pokemonsCreated.value = await pokemonAPI.list()
 }
+
+onMounted(async () => (pokemonsCreated.value = await pokemonAPI.list()))
 </script>
 
 <template>
