@@ -35,8 +35,8 @@ async def pokemon_list():
 # Metodo POST para URL pokemon/
 # Debe devolver un listado de pokemons junto con el que se agrego
 @app.post("/pokemon", status_code=status.HTTP_201_CREATED)
-async def add_pokemon(pokemon: Pokemon) -> list:
-    return pokemon
+async def add_pokemon(pokemon: Pokemon):
+    return database.add(pokemon)
 
 # Metodo PUT para URL pokemon/
 # Debe devolver un listado actualizado de pokemons

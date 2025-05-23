@@ -1,15 +1,14 @@
 <script setup lang="ts">
 const props = defineProps<{ name: string; labelText: string }>()
-const inputValue = defineModel({ default: "0" })
+const inputValue = defineModel({ default: '0' })
 
 function handleInput(event: Event) {
   const e = event.target as HTMLInputElement
-  if (Number.isNaN(e.valueAsNumber)) 
-  {
-    e.value = "0"
-    inputValue.value = "0"
+  if (Number.isNaN(e.valueAsNumber)) {
+    e.value = '0'
+    inputValue.value = '0'
   }
-  if (e.valueAsNumber > 100) inputValue.value = "0"
+  if (e.valueAsNumber > 100) inputValue.value = '0'
 }
 </script>
 
@@ -32,7 +31,7 @@ function handleInput(event: Event) {
 <style scoped>
 .input-container {
   position: relative;
-  width: 90%;
+  width: 100%;
 }
 
 .input-container input {

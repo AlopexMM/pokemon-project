@@ -26,7 +26,7 @@ function handleInput(event: Event) {
 <style scoped>
 .input-container {
   position: relative;
-  width: 90%;
+  width: 100%;
 }
 
 .input-container input {

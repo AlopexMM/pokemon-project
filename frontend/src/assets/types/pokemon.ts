@@ -1,5 +1,7 @@
+import type { UUIDTypes } from 'uuid'
+
 export interface IPokemonCard {
-  id: string
+  id: UUIDTypes
   name: string
   hp: number
   attack: number

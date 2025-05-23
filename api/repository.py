@@ -50,7 +50,6 @@ class PokemonRepo:
         self._database = Database()
     
     def add(self, pokemon: Pokemon) -> list:
-        pokemon.id = uuid4()
         return self._database.add(pokemon)
     
     def remove(self, id: UUID) -> list:

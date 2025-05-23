@@ -14,16 +14,12 @@ const instance = axios.create({
 export const pokemonAPI = {
   list: (): Promise<IPokemonCard[]> =>
     instance.get('/').then((res) => {
-      const pokemonData: IPokemonCard[] = []
-      const data = res.data
-      if (data.lenght > 0) {
-        data.forEach((d: IPokemonCard) => {
-          pokemonData.push(d)
-        })
-      }
-      return pokemonData
+      return res.data
     }),
-  add: (card: IPokemonCard) => instance.post('/', JSON.stringify(card)),
+  add: (card: IPokemonCard) => instance.post('/', card),
   update: (card: IPokemonCard) => instance.put(`/${card.id}`, card),
-  delete: (id: string) => instance.delete(`/${id}`),
+  delete: (id: string): Promise<IPokemonCard[]> =>
+    instance.delete(`/${id}`).then((res) => {
+      return res.data
+    }),
 }

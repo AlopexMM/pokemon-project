@@ -16,6 +16,7 @@ import {
 import { pokemonAPI } from '../assets/api'
 import type { Message } from '../assets/types/message'
 import { ref, onMounted } from 'vue'
+import { v4 as uuid4 } from 'uuid'
 
 // Variables
 const pokemons: IPokemonOption[] = [
@@ -102,7 +103,7 @@ async function createCard() {
 
   // Adding card
   await pokemonAPI.add({
-    id: 'null',
+    id: uuid4(),
     name: pokemonName.value,
     hp: parseInt(pokemonHp.value),
     attack: parseInt(pokemonAttack.value),
@@ -112,17 +113,19 @@ async function createCard() {
     element: pokemonImg.element,
   })
   pokemonsCreated.value = await pokemonAPI.list()
-
   // Reset all stats and name
   await resetForm()
   return
 }
 
-async function refreshPokemonList() {
-  pokemonsCreated.value = await pokemonAPI.list()
+async function refreshPokemonList(id: string) {
+  pokemonsCreated.value = await pokemonAPI.delete(id)
 }
 
-onMounted(async () => (pokemonsCreated.value = await pokemonAPI.list()))
+onMounted(async () => {
+  const list = await pokemonAPI.list()
+  pokemonsCreated.value = list
+})
 </script>
 
 <template>
@@ -167,18 +170,18 @@ onMounted(async () => (pokemonsCreated.value = await pokemonAPI.list()))
     <div class="button-container" automation-id="create-button-container">
       <PrimaryButtonComponent text="Crear Pokemon" @click="createCard" />
     </div>
-    <div class="showroom-container" v-if="pokemonsCreated.length > 0" automation-id="showroom">
+    <div v-if="pokemonsCreated.length > 0" class="showroom-container" automation-id="showroom">
       <CardComponent
         v-for="pokemon in pokemonsCreated"
         :key="pokemon.id"
         :pokemon="pokemon"
-        @deletePokemon="refreshPokemonList"
+        @deletePokemon="refreshPokemonList(pokemon.id)"
       />
     </div>
     <div
-      class="showroom-container roboto-black"
-      style="justify-content: center"
       v-else
+      class="showroom-container-else roboto-black"
+      style="justify-content: center"
       automation-it="showroom"
     >
       <h4>No hay cartas creadas</h4>
@@ -188,21 +191,26 @@ onMounted(async () => (pokemonsCreated.value = await pokemonAPI.list()))
 
 <style scoped>
 .container {
-  width: 900px;
+  width: 1200px;
   height: 100vh;
   margin: 20px;
+  display: grid;
+  grid-template-rows: 6fr;
 }
 
 .title {
   margin: 10px 0 10px 0;
+  display: grid;
+  justify-items: center;
 }
 
 /* Pokemon monter to select */
 .pokemon-list {
   width: auto;
   /* border: 1px solid grey; */
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
   padding: 10px;
 }
 
@@ -228,28 +236,30 @@ onMounted(async () => (pokemonsCreated.value = await pokemonAPI.list()))
 /* Pokemon name */
 .name-container {
   margin: 10px 10px 0 20px;
-  display: flex;
-  /* width: fit-content; */
-  /* justify-content: center; */
+  display: grid;
+  grid-template-columns: 1fr;
+  /* width: 1000px; */
+  justify-items: end;
 }
 
 /* Pokemon stats */
 
 .stats-container {
-  width: 97.5%;
-  height: 200px;
+  /* width: 97.5%; */
+  /* height: 200px; */
   /* border: 1px solid grey; */
   margin-top: 2px;
   padding: 20px 0 0 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  align-content: stretch;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  /* align-content: stretch; */
 }
 
 .stat-container {
   width: 350px;
   height: 60px;
+  margin: 20px;
 }
 
 .button-container {
@@ -264,9 +274,18 @@ onMounted(async () => (pokemonsCreated.value = await pokemonAPI.list()))
 /* Showroom of pokemon */
 .showroom-container {
   border: 1px solid grey;
-  height: 400px;
-  display: flex;
-  align-content: flex-start;
+  display: grid;
+  justify-items: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 10px;
+  gap: 5px;
+}
+
+.showroom-container-else {
+  border: 1px solid grey;
+  display: grid;
+  justify-items: center;
+  grid-template-columns: 1fr;
   padding: 10px;
   gap: 5px;
 }
