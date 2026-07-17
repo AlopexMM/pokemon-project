@@ -1,0 +1,17 @@
+services:
+  backend:
+    container_name: backend:v1
+    build:
+      context: ..
+      dockerfile: ./docker/backend/Dockerfile
+    ports:
+      - 8000:8000
+  images:
+    container_name: images
+    build:
+      context: ..
+      dockerfile: ./docker/images/Dockerfile
+    ports:
+      - 8080:80
+    depends_on:
+      - backend
