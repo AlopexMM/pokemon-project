@@ -5,7 +5,7 @@ def get_all_pokemon_db() -> list[PokemonResponse]:
     repository = PokemonRepository()
     pokemons = repository.get_all()
     return [PokemonResponse(
-        pokemon_id=pokemon.pokemon_id,
+        uid=pokemon.uid,
         name=pokemon.name,
         elements=pokemon.elements.split(","),
         hp=pokemon.hp,
