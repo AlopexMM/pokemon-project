@@ -12,7 +12,7 @@ from prefab_ui.components import (
     DataTableColumn,
     Text,
 )
-from prefab_ui.rx import RESULT, Rx
+from prefab_ui.rx import RESULT, Rx, STATE
 
 ui_router = APIRouter()
 
@@ -21,12 +21,11 @@ ui_router = APIRouter()
     response_class=HTMLResponse
 )
 def page():
-    fetch_pokemons = Fetch(
+    Fetch(
         "/api/all",
         method="GET",
         on_success=SetState("pokemons", RESULT)
     )
-    pokemons = Rx("pokemons")
     with Column() as view:
         DataTable(
             columns=[
@@ -34,7 +33,7 @@ def page():
                 DataTableColumn(key="name", header="Name"),
                 DataTableColumn(key="elements", header="Type")
             ],
-            rows=pokemons,
+            rows=STATE.pokemons,
             paginated=True,
             page_size=10,
             search=True
@@ -42,7 +41,6 @@ def page():
     return HTMLResponse(
         PrefabApp(
             title="Pokedex app",
-            view=view, 
-            state={"pokemons": []}
+            view=view,
             ).html()
     )

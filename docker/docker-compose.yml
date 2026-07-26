@@ -1,4 +1,11 @@
 services:
+  web:
+    container_name: web-v1
+    build:
+      context: ..
+      dockerfile: ./docker/web/Dockerfile
+    ports:
+      - 3000:3000
   backend:
     container_name: backend-v1
     build:
@@ -6,6 +13,8 @@ services:
       dockerfile: ./docker/backend/Dockerfile
     ports:
       - 8000:8000
+    depends_on:
+      - web
   images:
     container_name: images
     build:
