@@ -1,0 +1,42 @@
+services:
+  web:
+    container_name: web-v1
+    build:
+      context: ..
+      dockerfile: ./docker/web/Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - image-server
+      - backend
+    environment:
+      - INTERNAL_IMAGE_SERVER_URL="http://image-server:80"
+      - NEXT_PUBLIC_IMAGE_SERVER_URL="http://localhost:8080"
+    extra_hosts:
+      - "host.docker.internal:192.168.54.1"
+    networks:
+      - dnsnet
+  backend:
+    container_name: backend-v1
+    build:
+      context: ..
+      dockerfile: ./docker/backend/Dockerfile
+    ports:
+      - 8000:8000
+    networks:
+      - dnsnet
+  image-server:
+    container_name: images-v1
+    build:
+      context: ..
+      dockerfile: ./docker/images/Dockerfile
+    ports:
+      - 8080:80
+    depends_on:
+      - backend
+    networks:
+      - dnsnet
+
+networks:
+  dnsnet:
+    driver: bridge
