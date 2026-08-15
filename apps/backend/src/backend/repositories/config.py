@@ -21,7 +21,8 @@ def create_db():
                 special_attack=pokemon["sp_attack"],
                 special_defense=pokemon["sp_def"],
                 speed=pokemon["speed"],
-                icon=f"icons/{pokemon['name'].lower()}.png",
-                img=f"images/{pokemon['name'].lower()}.jpg")
+                icon=f"{pokemon['name'].lower()}.png",
+                icon_alt=pokemon['name'].lower(),
+                img=f"{pokemon['name'].lower()}.jpg")
             session.add(pokemon)
         session.commit()

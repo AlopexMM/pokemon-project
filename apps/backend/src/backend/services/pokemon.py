@@ -15,5 +15,6 @@ def get_all_pokemon_db() -> list[PokemonResponse]:
         special_defense=pokemon.special_defense,
         speed=pokemon.speed,
         icon=pokemon.icon,
+        icon_alt=pokemon.icon_alt,
         img=pokemon.img
     ) for pokemon in pokemons]

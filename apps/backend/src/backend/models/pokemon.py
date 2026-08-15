@@ -11,4 +11,5 @@ class PokemonResponse(BaseModel):
     special_defense: int
     speed: int
     icon: str
+    icon_alt: str
     img: str

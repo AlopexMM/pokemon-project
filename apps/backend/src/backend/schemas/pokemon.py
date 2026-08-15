@@ -12,4 +12,5 @@ class PokemonSchema(SQLModel, table=True):
     special_defense: int
     speed: int
     icon: str
+    icon_alt: str
     img: str
